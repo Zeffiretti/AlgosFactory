@@ -1,0 +1,107 @@
+[build-system]
+requires = ["setuptools >= 61.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "algos_factory"
+dynamic = ['version']
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    "gym",
+    "gymnasium",
+    "importlib-metadata==4.13.0",
+    "pandas",
+    "requests",
+    "tqdm",
+    "torch==2.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "mkdocs==1.2.4",
+    "mkdocs-autorefs",
+    "mkdocs-material==8.2.7",
+    "mkdocstrings[python]",
+    "ruff",
+    "flake8",
+    "pylint",
+    "pre-commit",
+    "mujoco",
+    "smplx",
+    "open3d",
+]
+
+[tool.setuptools.packages.find]
+include = ["algos_factory*"]
+
+
+[tool.isort]
+py_version = 310
+profile = "black"
+
+add_imports = "from __future__ import annotations"
+
+skip_glob = ["docs/*", "logs/*", ".vscode/*"] # Files to skip
+
+# Order of imports
+sections = [
+    "FUTURE",
+    "STDLIB",
+    "THIRDPARTY",
+    "ASSETS_FIRSTPARTY",
+    "FIRSTPARTY",
+    "EXTRA_FIRSTPARTY",
+    "LOCALFOLDER",
+]
+
+# Extra standard libraries considered as part of python (permissive licenses
+extra_standard_library = [
+    "numpy",
+    "h5py",
+    "open3d",
+    "torch",
+    "tensordict",
+    "bpy",
+    "matplotlib",
+    "gymnasium",
+    "gym",
+    "scipy",
+    "hid",
+    "yaml",
+    "prettytable",
+    "toml",
+    "trimesh",
+    "tqdm",
+]
+
+[tool.ruff]
+select = ["E", "F", "PL", "B", "N", "I"]
+ignore = ["E501", "E203", "E402"]
+line-length = 120
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.pylint]
+max-line-length = 120
+disable = ["C0114", "C0115", "C0116", "C0411", "C0413", "W0201"]
+ignored-modules = "torch"
+variable-rgx = "[a-z_][a-z0-9_]*$"
+
+[tool.flake8]
+per-file-ignores = "rl_games/*.py=E402"
+max-line-length = 120
+
+[tool.pyright]
+
+include = ["algos_factory"]
+exclude = ["**/__pycache__", "**/docs", "**/logs", ".git", ".vscode"]
+
+typeCheckingMode = "basic"
+pythonVersion = "3.10"
+pythonPlatform = "Linux"
+enableTypeIgnoreComments = true
+
+[tool.black]
+line-length = 120
