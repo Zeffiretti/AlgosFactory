@@ -159,7 +159,8 @@ class Diffusion(nn.Module):
             t (torch.Tensor): The time step tensor.
             state (Any): Additional state information required by the model.
         Returns:
-            Tuple[torch.Tensor, torch.Tensor]: A tuple containing the mean and log variance of the posterior distribution.
+            Tuple[torch.Tensor, torch.Tensor]: A tuple containing the mean and log variance of the posterior
+            distribution.
         """
         # batch_size, *_, device = x.shape, x.device
 
