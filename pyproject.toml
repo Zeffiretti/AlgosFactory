@@ -6,15 +6,16 @@ build-backend = "setuptools.build_meta"
 name = "algos_factory"
 dynamic = ['version']
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.10"
 dependencies = [
     "gym",
     "gymnasium",
     "importlib-metadata==4.13.0",
     "pandas",
     "requests",
-    "tqdm",
-    "torch==2.0.1",
+    "torch==2.2.0",
+    "numpy==1.26.4",
+    "pybind11>=2.12",
 ]
 
 [project.optional-dependencies]
@@ -27,9 +28,7 @@ dev = [
     "flake8",
     "pylint",
     "pre-commit",
-    "mujoco",
-    "smplx",
-    "open3d",
+    "Flake8-pyproject",
 ]
 
 [tool.setuptools.packages.find]
@@ -90,7 +89,6 @@ ignored-modules = "torch"
 variable-rgx = "[a-z_][a-z0-9_]*$"
 
 [tool.flake8]
-per-file-ignores = "rl_games/*.py=E402"
 max-line-length = 120
 
 [tool.pyright]
