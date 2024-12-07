@@ -189,8 +189,9 @@ class Diffusion(nn.Module):
         )
 
     def q_posterior(self, x0, xt, t):
-        """
-        Compute the posterior mean, variance, and log variance for the given inputs: $q(x_{t-1} | x_t, x_0)$.
+        r"""Backward pass of the diffusion model. Compute the posterior mean, variance, and log variance for the given
+        inputs: $q(x_{t-1} | x_t, x_0)$.
+        $$ q(x_{t-1} | x_t, x_0) = \mathcal{N}(x_{t-1}; \mu_{t-1}, \sigma^2_{t-1}) $$
         Args:
             x_recon (torch.Tensor): The reconstructed input tensor.
             x (torch.Tensor): The original input tensor.
@@ -243,15 +244,19 @@ class Diffusion(nn.Module):
         return loss
 
     def q_sample(self, x0, t, noise=None):
-        """
-        Generate a sample from the posterior distribution at a given timestep.
-            q(x_{t-1} | x_t, x_0)
+        r"""Forward pass of the diffusion model. Generates a sample from the diffusion process at a given timestep.
+        $$
+            q(x_t | x_0) = \mathcal{N}(x_t; \sqrt{\alpha_t} x_0, (1-\alpha_t)I)
+        $$
+
         Args:
-            x0 (torch.Tensor): The input tensor representing the current state.
-            t (torch.Tensor): The current timestep tensor.
-            noise (torch.Tensor): The noise tensor.
+            x0 (torch.Tensor): The initial data tensor. [batch_size, ...]
+            t (torch.Tensor): The current timestep tensor. [batch_size]
+            noise (torch.Tensor, optional): Optional noise tensor. If not provided,
+                                            random noise will be generated. [batch_size, ...]
+
         Returns:
-            torch.Tensor: The sampled tensor from the posterior distribution.
+            torch.Tensor: The generated sample tensor. [batch_size, ...]
         """
         if noise is None:
             noise = torch.randn_like(x0)
